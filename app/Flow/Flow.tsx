@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import ReactFlow, {
   Controls,
   Background,
@@ -10,6 +10,7 @@ import 'reactflow/dist/style.css'
 import AddNode from '@/app/Flow/AddNode/AddNode'
 import { v4 as uuidv4 } from 'uuid'
 import { initEdges, initNodes } from '@/app/Flow/initNodesEdges'
+import CustomNode from '@/app/Flow/CustomNode/CustomNode'
 
 interface Props {}
 
@@ -25,7 +26,8 @@ export default function Flow() {
     const data = event.dataTransfer.getData('application/reactflow')
     const newNode = {
       id: uuidv4(),
-      data: { label: uuidv4() },
+      data: { value: 123 },
+      type: 'CustomNode',
       position: reactFlowInstance.project({
         x: event.clientX - 100,
         y: event.clientY - 50,
@@ -41,7 +43,7 @@ export default function Flow() {
   }
 
   function onNodeDragStop() {}
-  const nodeTypes = {}
+  const nodeTypes = useMemo(() => ({ CustomNode }), [])
   const edgeTypes = {}
   function onConnect(p: any) {
     const newEdge = {
@@ -53,7 +55,6 @@ export default function Flow() {
     setEdges((prevState) => {
       return [...prevState, newEdge]
     })
-    console.log('p', p)
   }
   function onInit() {}
   return (
@@ -67,8 +68,8 @@ export default function Flow() {
         onDrop={onDrop}
         onDragOver={onDragOver}
         onNodeDragStop={onNodeDragStop}
-        // nodeTypes={nodeTypes}
-        // edgeTypes={edgeTypes}
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         onConnect={onConnect}
         onInit={onInit}
         fitView={true}
