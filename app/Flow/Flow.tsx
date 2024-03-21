@@ -1,13 +1,36 @@
 import React from 'react'
-import ReactFlow, { Controls, Background } from 'reactflow'
+import ReactFlow, {
+  Controls,
+  Background,
+  useNodesState,
+  useEdgesState,
+} from 'reactflow'
 import 'reactflow/dist/style.css'
-import Add from '@/app/Flow/Add'
+import AddNode from '@/app/Flow/AddNode/AddNode'
 interface Props {}
 
 export default function Flow() {
+  const [nodes, setNodes, onNodesChange] = useNodesState([])
+  const [edges, setEdges, onEdgesChange] = useEdgesState([])
+
   return (
     <div style={{ height: '100%' }}>
-      <ReactFlow>
+      <ReactFlow
+        onDrop={(event) => {
+          event.preventDefault()
+          console.log('drop')
+        }}
+        onDragOver={(event) => {
+          event.preventDefault()
+          event.dataTransfer.dropEffect = 'move'
+        }}
+        onNodeDragStop={() => {
+          console.log('stop')
+        }}
+        onDragEnd={(e) => {
+          console.log('hah')
+        }}
+      >
         <Background />
         <Controls
           style={{
@@ -17,7 +40,7 @@ export default function Flow() {
             transform: 'translate(-50%, -50%)',
           }}
         />
-        <Add></Add>
+        <AddNode></AddNode>
       </ReactFlow>
     </div>
   )
