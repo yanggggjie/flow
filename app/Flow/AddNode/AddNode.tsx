@@ -5,22 +5,22 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import CustomCard from '@/app/Flow/CustomNode/CustomCard'
 
 export default function AddNode({}: Props) {
   return (
     <div className={'fixed top-0 left-0 z-10'}>
       <Popover open={true}>
-        <PopoverTrigger>add node</PopoverTrigger>
-        <PopoverContent>
+        <PopoverTrigger>add card</PopoverTrigger>
+        <PopoverContent className={'flex flex-col justify-center items-center'}>
           <div
-            className={'px-10 py-10 border-4'}
             draggable={true}
             onDragStart={(event) => {
               event.dataTransfer.setData('application/reactflow', 'hahaha')
               event.dataTransfer.effectAllowed = 'move'
             }}
           >
-            some thing draggable
+            <CustomCard></CustomCard>
           </div>
         </PopoverContent>
       </Popover>

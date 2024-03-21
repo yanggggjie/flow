@@ -33,6 +33,7 @@ export default function Flow() {
         y: event.clientY - 50,
       }),
     }
+    // @ts-ignore
     setNodes((prevState) => {
       return [...prevState, newNode]
     })
