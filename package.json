@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy prebbuilt": "vercel build && vercel deploy --prebuilt",
     "start": "next start",
     "lint": "next lint"
   },
