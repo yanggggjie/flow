@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 interface Props {}
 import {
@@ -17,11 +16,11 @@ export default function AddNode({}: Props) {
             className={'px-10 py-10 border-4'}
             draggable={true}
             onDragStart={(event) => {
-              event.dataTransfer.setData('application/json', 'hahaha')
+              event.dataTransfer.setData('application/reactflow', 'hahaha')
               event.dataTransfer.effectAllowed = 'move'
             }}
           >
-            some thing
+            some thing draggable
           </div>
         </PopoverContent>
       </Popover>

@@ -1,35 +1,79 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import ReactFlow, {
   Controls,
   Background,
   useNodesState,
   useEdgesState,
+  useReactFlow,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 import AddNode from '@/app/Flow/AddNode/AddNode'
+import { v4 as uuidv4 } from 'uuid'
+import { initEdges, initNodes } from '@/app/Flow/initNodesEdges'
+
 interface Props {}
 
 export default function Flow() {
-  const [nodes, setNodes, onNodesChange] = useNodesState([])
-  const [edges, setEdges, onEdgesChange] = useEdgesState([])
+  const reactFlowInstance = useReactFlow()
+  const flowContainerRef = useRef<HTMLDivElement>(null)
+  const [nodes, setNodes, onNodesChange] = useNodesState(initNodes)
+  const [edges, setEdges, onEdgesChange] = useEdgesState(initEdges)
 
+  function onNodeClick() {}
+  function onDrop(event: React.DragEvent<HTMLElement>) {
+    event.preventDefault()
+    const data = event.dataTransfer.getData('application/reactflow')
+    const newNode = {
+      id: uuidv4(),
+      data: { label: uuidv4() },
+      position: reactFlowInstance.project({
+        x: event.clientX - 100,
+        y: event.clientY - 50,
+      }),
+    }
+    setNodes((prevState) => {
+      return [...prevState, newNode]
+    })
+  }
+  function onDragOver(event: React.DragEvent<HTMLElement>) {
+    event.preventDefault()
+    event.dataTransfer.dropEffect = 'move'
+  }
+
+  function onNodeDragStop() {}
+  const nodeTypes = {}
+  const edgeTypes = {}
+  function onConnect(p: any) {
+    const newEdge = {
+      id: uuidv4(),
+      source: p.source,
+      target: p.target,
+      animated: true,
+    }
+    setEdges((prevState) => {
+      return [...prevState, newEdge]
+    })
+    console.log('p', p)
+  }
+  function onInit() {}
   return (
-    <div style={{ height: '100%' }}>
+    <div style={{ height: '100%' }} ref={flowContainerRef}>
       <ReactFlow
-        onDrop={(event) => {
-          event.preventDefault()
-          console.log('drop')
-        }}
-        onDragOver={(event) => {
-          event.preventDefault()
-          event.dataTransfer.dropEffect = 'move'
-        }}
-        onNodeDragStop={() => {
-          console.log('stop')
-        }}
-        onDragEnd={(e) => {
-          console.log('hah')
-        }}
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onNodeClick={onNodeClick}
+        onEdgesChange={onEdgesChange}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
+        onNodeDragStop={onNodeDragStop}
+        // nodeTypes={nodeTypes}
+        // edgeTypes={edgeTypes}
+        onConnect={onConnect}
+        onInit={onInit}
+        fitView={true}
+        deleteKeyCode={['Delete']}
+        minZoom={0.1}
       >
         <Background />
         <Controls
