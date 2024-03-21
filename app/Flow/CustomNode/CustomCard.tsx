@@ -1,5 +1,4 @@
 import React from 'react'
-interface Props {}
 import {
   Card,
   CardContent,
@@ -8,22 +7,23 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+interface Props {
+  className?: string
+}
 
-export default function CustomCard({}: Props) {
+export default function CustomCard({ className = '' }: Props) {
   return (
-    <div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Card Title</CardTitle>
-          <CardDescription>Card Description</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
-        </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
-      </Card>
-    </div>
+    <Card className={className}>
+      <CardHeader>
+        <CardTitle>Card Title</CardTitle>
+        <CardDescription>Card Description</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>Card Content</p>
+      </CardContent>
+      <CardFooter>
+        <p>Card Footer</p>
+      </CardFooter>
+    </Card>
   )
 }

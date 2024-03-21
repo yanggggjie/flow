@@ -4,19 +4,23 @@ export const initNodes = [
   {
     id: '1',
     type: 'CustomNode',
-    data: { value: 'node 1' },
+    data: {
+      value: 'node 1',
+
+      selected: false,
+    },
     position: { x: 0, y: 0 },
   },
   {
     id: '2a',
     type: 'CustomNode',
-    data: { value: 'node 2-1' },
+    data: { value: 'node 2-1', selected: false },
     position: { x: 200, y: -50 },
   },
   {
     id: '2b',
     type: 'CustomNode',
-    data: { value: 'node 2-2' },
+    data: { value: 'node 2-2', selected: false },
     position: { x: 200, y: 150 },
   },
 ] as {

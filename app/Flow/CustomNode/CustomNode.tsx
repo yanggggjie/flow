@@ -5,6 +5,7 @@ import CustomCard from '@/app/Flow/CustomNode/CustomCard'
 
 export interface CustomNodeData {
   value: string
+  selected: boolean
 }
 
 interface Props {
@@ -36,7 +37,9 @@ export default function CustomNode({ data }: Props) {
           top: 150,
         }}
       />
-      <CustomCard></CustomCard>
+      <CustomCard
+        className={twMerge(data.selected ? 'ring-4' : 'hover:ring-2')}
+      ></CustomCard>
     </div>
   )
 }

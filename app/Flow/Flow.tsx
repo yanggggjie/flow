@@ -20,19 +20,45 @@ export default function Flow() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(initEdges)
 
-  function onNodeClick() {}
+  function setNodeSelected(id: string) {
+    setNodes((prevState: any) => {
+      return prevState.map((node: any) => {
+        if (id === node.id)
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              selected: true,
+            },
+          }
+        return {
+          ...node,
+          data: {
+            ...node.data,
+            selected: false,
+          },
+        }
+      })
+    })
+  }
+
+  function onNodeClick(event: any, p: any) {
+    setNodeSelected(p.id)
+  }
   function onDrop(event: React.DragEvent<HTMLElement>) {
     event.preventDefault()
     const data = event.dataTransfer.getData('application/reactflow')
     const newNode = {
       id: uuidv4(),
-      data: { value: 123 },
+      data: { value: 123, selected: true },
       type: 'CustomNode',
       position: reactFlowInstance.project({
         x: event.clientX - 100,
         y: event.clientY - 50,
       }),
     }
+    setNodeSelected(newNode.id)
+
     // @ts-ignore
     setNodes((prevState) => {
       return [...prevState, newNode]
