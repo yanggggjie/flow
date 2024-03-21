@@ -1,5 +1,12 @@
-import Image from 'next/image'
+'use client'
+import ReactFlow from 'reactflow'
+import 'reactflow/dist/style.css'
+import Flow from '@/app/Flow/Flow'
 
 export default function Home() {
-  return <main>in main</main>
+  return (
+    <main className={'h-screen w-screen'}>
+      <Flow></Flow>
+    </main>
+  )
 }
