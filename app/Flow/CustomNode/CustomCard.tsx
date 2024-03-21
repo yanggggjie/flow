@@ -7,13 +7,14 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { twMerge } from 'tailwind-merge'
 interface Props {
   className?: string
 }
 
 export default function CustomCard({ className = '' }: Props) {
   return (
-    <Card className={className}>
+    <Card className={twMerge(className, 'cursor-grab')}>
       <CardHeader>
         <CardTitle>Card Title</CardTitle>
         <CardDescription>Card Description</CardDescription>

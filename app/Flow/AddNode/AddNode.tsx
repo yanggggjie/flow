@@ -11,7 +11,7 @@ export default function AddNode({}: Props) {
   return (
     <div className={'fixed top-0 left-0 z-10'}>
       <Popover open={true}>
-        <PopoverTrigger>add card</PopoverTrigger>
+        <PopoverTrigger>drag and drop</PopoverTrigger>
         <PopoverContent className={'flex flex-col justify-center items-center'}>
           <div
             draggable={true}
