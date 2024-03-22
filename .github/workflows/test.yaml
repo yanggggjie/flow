@@ -1,0 +1,26 @@
+name: Deploy to Remote Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: SSH and Execute Commands
+        run: |
+          ssh -o StrictHostKeyChecking=no root@120.46.214.109 << 'EOF'
+            echo "Logged into the server successfully."
+            # Execute any commands here
+            ls -a
+          EOF
